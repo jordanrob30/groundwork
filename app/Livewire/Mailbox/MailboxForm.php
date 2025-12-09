@@ -6,12 +6,15 @@ namespace App\Livewire\Mailbox;
 
 use App\Models\Mailbox;
 use App\Services\MailboxService;
+use App\Traits\HandlesImpersonation;
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class MailboxForm extends Component
 {
+    use HandlesImpersonation;
+
     public ?Mailbox $mailbox = null;
 
     public string $name = '';
@@ -199,7 +202,7 @@ class MailboxForm extends Component
             $this->dispatch('mailbox-updated', mailbox: $this->mailbox);
             session()->flash('message', 'Mailbox updated successfully.');
         } else {
-            $mailbox = $service->create(auth()->id(), $data);
+            $mailbox = $service->create($this->getEffectiveUserId(), $data);
             $this->dispatch('mailbox-created', mailbox: $mailbox);
             session()->flash('message', 'Mailbox created successfully.');
         }

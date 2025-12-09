@@ -6,12 +6,15 @@ namespace App\Livewire\Campaign;
 
 use App\Models\Campaign;
 use App\Services\CampaignService;
+use App\Traits\HandlesImpersonation;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
 class CampaignList extends Component
 {
+    use HandlesImpersonation;
+
     public Collection $campaigns;
 
     public string $filterStatus = 'all';
@@ -27,7 +30,7 @@ class CampaignList extends Component
 
     public function loadCampaigns(): void
     {
-        $query = Campaign::forUser(auth()->id())
+        $query = Campaign::forUser($this->getEffectiveUserId())
             ->with(['mailbox', 'leads', 'responses']);
 
         if ($this->filterStatus !== 'all') {
@@ -62,7 +65,7 @@ class CampaignList extends Component
     {
         $campaign = Campaign::findOrFail($campaignId);
 
-        if ($campaign->user_id !== auth()->id()) {
+        if ($campaign->user_id !== $this->getEffectiveUserId()) {
             return;
         }
 
@@ -77,7 +80,7 @@ class CampaignList extends Component
     {
         $campaign = Campaign::findOrFail($campaignId);
 
-        if ($campaign->user_id !== auth()->id()) {
+        if ($campaign->user_id !== $this->getEffectiveUserId()) {
             return;
         }
 
@@ -91,7 +94,7 @@ class CampaignList extends Component
     {
         $campaign = Campaign::findOrFail($campaignId);
 
-        if ($campaign->user_id !== auth()->id()) {
+        if ($campaign->user_id !== $this->getEffectiveUserId()) {
             return;
         }
 

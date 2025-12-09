@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name', 'Discovery Engine') }}</title>
+        <title>{{ config('app.name', 'Groundwork') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -18,7 +18,7 @@
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                 <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
                     <div class="flex lg:justify-center lg:col-start-2">
-                        <h1 class="text-3xl font-bold text-brand">Discovery Engine</h1>
+                        <x-application-logo class="scale-125" />
                     </div>
                     @if (Route::has('login'))
                         <livewire:welcome.navigation />
@@ -109,7 +109,7 @@
                 </main>
 
                 <footer class="py-16 text-center text-sm text-text-muted">
-                    Discovery Engine &copy; {{ date('Y') }}
+                    Groundwork &copy; {{ date('Y') }}
                 </footer>
             </div>
         </div>

@@ -6,12 +6,15 @@ namespace App\Livewire\Mailbox;
 
 use App\Models\Mailbox;
 use App\Services\MailboxService;
+use App\Traits\HandlesImpersonation;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
 class MailboxList extends Component
 {
+    use HandlesImpersonation;
+
     public Collection $mailboxes;
 
     public ?string $filterStatus = null;
@@ -23,7 +26,7 @@ class MailboxList extends Component
 
     public function loadMailboxes(): void
     {
-        $query = Mailbox::forUser(auth()->id())
+        $query = Mailbox::forUser($this->getEffectiveUserId())
             ->orderBy('created_at', 'desc');
 
         if ($this->filterStatus) {
@@ -43,7 +46,7 @@ class MailboxList extends Component
     {
         $mailbox = Mailbox::findOrFail($mailboxId);
 
-        if ($mailbox->user_id !== auth()->id()) {
+        if ($mailbox->user_id !== $this->getEffectiveUserId()) {
             return;
         }
 
@@ -56,7 +59,7 @@ class MailboxList extends Component
     {
         $mailbox = Mailbox::findOrFail($mailboxId);
 
-        if ($mailbox->user_id !== auth()->id()) {
+        if ($mailbox->user_id !== $this->getEffectiveUserId()) {
             return;
         }
 
@@ -69,7 +72,7 @@ class MailboxList extends Component
     {
         $mailbox = Mailbox::findOrFail($mailboxId);
 
-        if ($mailbox->user_id !== auth()->id()) {
+        if ($mailbox->user_id !== $this->getEffectiveUserId()) {
             return;
         }
 
