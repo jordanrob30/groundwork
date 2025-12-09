@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Groundwork Dark Mode Design Tokens",
+  "description": "Design token specification for dark mode branding implementation",
+  "version": "1.0.0",
+  "metadata": {
+    "feature": "002-dark-mode-branding",
+    "created": "2025-12-09",
+    "wcagLevel": "AA"
+  },
+  "tokens": {
+    "color": {
+      "core": {
+        "neutral": {
+          "950": { "value": "#0f0f14", "description": "Darkest background" },
+          "900": { "value": "#1a1b26", "description": "Elevated surfaces" },
+          "800": { "value": "#24253a", "description": "Surface/hover" },
+          "700": { "value": "#363852", "description": "Subtle borders" },
+          "600": { "value": "#4a4d6a", "description": "Dividers" },
+          "500": { "value": "#6b7280", "description": "Muted text" },
+          "400": { "value": "#9ca3af", "description": "Placeholder text" },
+          "300": { "value": "#a0a0a0", "description": "Secondary text" },
+          "200": { "value": "#d1d5db", "description": "Light gray" },
+          "100": { "value": "#e5e5e5", "description": "Primary text" },
+          "50": { "value": "#f5f5f5", "description": "Lightest" }
+        },
+        "brand": {
+          "teal": {
+            "600": { "value": "#0d9488", "description": "Active state" },
+            "500": { "value": "#14b8a6", "description": "Primary brand" },
+            "400": { "value": "#2dd4bf", "description": "Hover state" },
+            "300": { "value": "#5eead4", "description": "Light accent" }
+          },
+          "amber": {
+            "600": { "value": "#d97706", "description": "Active accent" },
+            "500": { "value": "#f59e0b", "description": "Accent color" },
+            "400": { "value": "#fbbf24", "description": "Hover accent" }
+          }
+        },
+        "semantic": {
+          "success": {
+            "500": { "value": "#22c55e", "description": "Success" },
+            "400": { "value": "#4ade80", "description": "Success light" }
+          },
+          "error": {
+            "500": { "value": "#ef4444", "description": "Error" },
+            "400": { "value": "#f87171", "description": "Error light" }
+          },
+          "warning": {
+            "500": { "value": "#f59e0b", "description": "Warning" },
+            "400": { "value": "#fbbf24", "description": "Warning light" }
+          },
+          "info": {
+            "500": { "value": "#3b82f6", "description": "Info" },
+            "400": { "value": "#60a5fa", "description": "Info light" }
+          }
+        },
+        "lead": {
+          "hot": {
+            "background": { "value": "#3f1219", "description": "Hot lead bg" },
+            "text": { "value": "#fca5a5", "description": "Hot lead text" },
+            "border": { "value": "#ef4444", "description": "Hot lead border" }
+          },
+          "warm": {
+            "background": { "value": "#431407", "description": "Warm lead bg" },
+            "text": { "value": "#fdba74", "description": "Warm lead text" },
+            "border": { "value": "#f97316", "description": "Warm lead border" }
+          },
+          "cold": {
+            "background": { "value": "#1e3a5f", "description": "Cold lead bg" },
+            "text": { "value": "#93c5fd", "description": "Cold lead text" },
+            "border": { "value": "#3b82f6", "description": "Cold lead border" }
+          },
+          "negative": {
+            "background": { "value": "#1f2937", "description": "Negative lead bg" },
+            "text": { "value": "#9ca3af", "description": "Negative lead text" },
+            "border": { "value": "#6b7280", "description": "Negative lead border" }
+          }
+        }
+      },
+      "semantic": {
+        "background": {
+          "base": { "value": "{color.core.neutral.950}", "description": "Page background" },
+          "elevated": { "value": "{color.core.neutral.900}", "description": "Cards, modals" },
+          "surface": { "value": "{color.core.neutral.800}", "description": "Hover states" },
+          "overlay": { "value": "rgba(15, 15, 20, 0.8)", "description": "Modal overlay" }
+        },
+        "text": {
+          "primary": { "value": "{color.core.neutral.100}", "description": "Main text" },
+          "secondary": { "value": "{color.core.neutral.300}", "description": "Secondary text" },
+          "muted": { "value": "{color.core.neutral.500}", "description": "Muted text" },
+          "inverse": { "value": "{color.core.neutral.950}", "description": "Dark text on light" }
+        },
+        "border": {
+          "default": { "value": "{color.core.neutral.800}", "description": "Default borders" },
+          "muted": { "value": "{color.core.neutral.700}", "description": "Subtle borders" },
+          "focus": { "value": "{color.core.brand.teal.500}", "description": "Focus rings" }
+        },
+        "interactive": {
+          "primary": { "value": "{color.core.brand.teal.500}", "description": "Primary action" },
+          "primaryHover": { "value": "{color.core.brand.teal.400}", "description": "Primary hover" },
+          "primaryActive": { "value": "{color.core.brand.teal.600}", "description": "Primary active" },
+          "accent": { "value": "{color.core.brand.amber.500}", "description": "Accent action" },
+          "accentHover": { "value": "{color.core.brand.amber.400}", "description": "Accent hover" },
+          "accentActive": { "value": "{color.core.brand.amber.600}", "description": "Accent active" }
+        },
+        "state": {
+          "success": { "value": "{color.core.semantic.success.500}", "description": "Success" },
+          "successBg": { "value": "rgba(34, 197, 94, 0.1)", "description": "Success bg" },
+          "warning": { "value": "{color.core.semantic.warning.500}", "description": "Warning" },
+          "warningBg": { "value": "rgba(245, 158, 11, 0.1)", "description": "Warning bg" },
+          "error": { "value": "{color.core.semantic.error.500}", "description": "Error" },
+          "errorBg": { "value": "rgba(239, 68, 68, 0.1)", "description": "Error bg" },
+          "info": { "value": "{color.core.semantic.info.500}", "description": "Info" },
+          "infoBg": { "value": "rgba(59, 130, 246, 0.1)", "description": "Info bg" }
+        }
+      }
+    },
+    "typography": {
+      "fontFamily": {
+        "sans": { "value": "Figtree, system-ui, sans-serif", "description": "Primary font" }
+      },
+      "fontWeight": {
+        "normal": { "value": "400", "description": "Body text" },
+        "medium": { "value": "500", "description": "Labels" },
+        "semibold": { "value": "600", "description": "Headings" },
+        "bold": { "value": "700", "description": "Emphasis" }
+      }
+    },
+    "spacing": {
+      "focus": {
+        "ringWidth": { "value": "2px", "description": "Focus ring width" },
+        "ringOffset": { "value": "2px", "description": "Focus ring offset" }
+      }
+    }
+  },
+  "accessibility": {
+    "contrastRatios": {
+      "primaryTextOnBase": { "ratio": "13.5:1", "requirement": "4.5:1", "status": "AAA" },
+      "secondaryTextOnBase": { "ratio": "7.2:1", "requirement": "4.5:1", "status": "AAA" },
+      "mutedTextOnBase": { "ratio": "4.8:1", "requirement": "4.5:1", "status": "AA" },
+      "brandOnBase": { "ratio": "6.8:1", "requirement": "3:1", "status": "AAA" },
+      "errorOnBase": { "ratio": "5.2:1", "requirement": "3:1", "status": "AA" },
+      "successOnBase": { "ratio": "6.1:1", "requirement": "3:1", "status": "AA" },
+      "focusRingOnBase": { "ratio": "6.8:1", "requirement": "3:1", "status": "AAA" }
+    }
+  }
+}

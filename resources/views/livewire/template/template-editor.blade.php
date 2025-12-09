@@ -1,14 +1,14 @@
 <div>
     <div class="mb-6">
-        <h2 class="text-2xl font-bold text-gray-900">
+        <h2 class="text-2xl font-bold text-text-primary">
             {{ $template ? 'Edit Template' : 'Create Template' }}
         </h2>
-        <p class="mt-1 text-sm text-gray-600">{{ $campaign->name }}</p>
+        <p class="mt-1 text-sm text-text-secondary">{{ $campaign->name }}</p>
     </div>
 
     @if (session()->has('message'))
-        <div class="mb-4 rounded-md bg-green-50 p-4">
-            <p class="text-sm font-medium text-green-800">{{ session('message') }}</p>
+        <div class="mb-4 rounded-md bg-success-bg p-4">
+            <p class="text-sm font-medium text-success">{{ session('message') }}</p>
         </div>
     @endif
 
@@ -16,14 +16,14 @@
         <!-- Editor -->
         <div class="space-y-6">
             <form wire:submit="save" class="space-y-6">
-                <div class="bg-white shadow rounded-lg p-6">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Template Details</h3>
+                <div class="bg-bg-elevated shadow rounded-lg p-6">
+                    <h3 class="text-lg font-medium text-text-primary mb-4">Template Details</h3>
 
                     <!-- Name -->
                     <div class="mb-4">
-                        <label for="name" class="block text-sm font-medium text-gray-700">Template Name</label>
+                        <label for="name" class="block text-sm font-medium text-text-primary">Template Name</label>
                         <input type="text" wire:model="name" id="name"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            class="mt-1 block w-full rounded-md border-border-default shadow-sm focus:border-brand focus:ring-brand sm:text-sm"
                             placeholder="Initial Outreach">
                         @error('name') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
@@ -31,46 +31,46 @@
                     <!-- Sequence Settings -->
                     <div class="grid grid-cols-2 gap-4 mb-4">
                         <div>
-                            <label for="sequence_order" class="block text-sm font-medium text-gray-700">Sequence Position</label>
+                            <label for="sequence_order" class="block text-sm font-medium text-text-primary">Sequence Position</label>
                             <input type="number" wire:model="sequence_order" id="sequence_order" min="1"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                class="mt-1 block w-full rounded-md border-border-default shadow-sm focus:border-brand focus:ring-brand sm:text-sm">
                             @error('sequence_order') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                         </div>
                         <div>
-                            <label for="delay_days" class="block text-sm font-medium text-gray-700">Days After Previous</label>
+                            <label for="delay_days" class="block text-sm font-medium text-text-primary">Days After Previous</label>
                             <input type="number" wire:model="delay_days" id="delay_days" min="0" max="30"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                class="mt-1 block w-full rounded-md border-border-default shadow-sm focus:border-brand focus:ring-brand sm:text-sm">
                             @error('delay_days') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                         </div>
                     </div>
 
                     <div class="mb-4">
-                        <label for="delay_type" class="block text-sm font-medium text-gray-700">Delay Type</label>
+                        <label for="delay_type" class="block text-sm font-medium text-text-primary">Delay Type</label>
                         <select wire:model="delay_type" id="delay_type"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                            class="mt-1 block w-full rounded-md border-border-default shadow-sm focus:border-brand focus:ring-brand sm:text-sm">
                             <option value="business">Business Days</option>
                             <option value="calendar">Calendar Days</option>
                         </select>
                     </div>
                 </div>
 
-                <div class="bg-white shadow rounded-lg p-6">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Email Content</h3>
+                <div class="bg-bg-elevated shadow rounded-lg p-6">
+                    <h3 class="text-lg font-medium text-text-primary mb-4">Email Content</h3>
 
                     <!-- Subject -->
                     <div class="mb-4">
-                        <label for="subject" class="block text-sm font-medium text-gray-700">Subject Line</label>
+                        <label for="subject" class="block text-sm font-medium text-text-primary">Subject Line</label>
                         <input type="text" wire:model.live.debounce.500ms="subject" id="subject"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            class="mt-1 block w-full rounded-md border-border-default shadow-sm focus:border-brand focus:ring-brand sm:text-sm"
                             placeholder="Quick question about @{{company}}">
                         @error('subject') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
 
                     <!-- Body -->
                     <div class="mb-4">
-                        <label for="body" class="block text-sm font-medium text-gray-700">Email Body</label>
+                        <label for="body" class="block text-sm font-medium text-text-primary">Email Body</label>
                         <textarea wire:model.live.debounce.500ms="body" id="body" rows="12"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm font-mono"
+                            class="mt-1 block w-full rounded-md border-border-default shadow-sm focus:border-brand focus:ring-brand sm:text-sm font-mono"
                             placeholder="Hi @{{first_name}},
 
 I noticed @{{company}} is in the [industry] space..."></textarea>
@@ -79,11 +79,11 @@ I noticed @{{company}} is in the [industry] space..."></textarea>
 
                     <!-- Variable Buttons -->
                     <div class="border-t pt-4">
-                        <p class="text-xs font-medium text-gray-500 uppercase mb-2">Insert Variable</p>
+                        <p class="text-xs font-medium text-text-secondary uppercase mb-2">Insert Variable</p>
                         <div class="flex flex-wrap gap-2">
                             @foreach ($supportedVariables as $variable => $label)
                                 <button type="button" wire:click="insertVariable('{{ $variable }}')"
-                                    class="inline-flex items-center px-2.5 py-1.5 border border-gray-300 text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50">
+                                    class="inline-flex items-center px-2.5 py-1.5 border border-border-default text-xs font-medium rounded text-text-primary bg-bg-elevated hover:bg-bg-base">
                                     {{ $label }}
                                 </button>
                             @endforeach
@@ -94,16 +94,16 @@ I noticed @{{company}} is in the [industry] space..."></textarea>
                 <!-- Form Actions -->
                 <div class="flex justify-between">
                     <a href="{{ route('campaigns.templates.index', $campaign) }}"
-                        class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                        class="inline-flex items-center px-4 py-2 border border-border-default shadow-sm text-sm font-medium rounded-md text-text-primary bg-bg-elevated hover:bg-bg-base">
                         Cancel
                     </a>
                     <div class="flex space-x-3">
                         <button type="button" wire:click="saveToLibrary"
-                            class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            class="inline-flex items-center px-4 py-2 border border-border-default shadow-sm text-sm font-medium rounded-md text-text-primary bg-bg-elevated hover:bg-bg-base">
                             Save to Library
                         </button>
                         <button type="submit"
-                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
+                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-brand hover:bg-brand-hover">
                             {{ $template ? 'Update Template' : 'Create Template' }}
                         </button>
                     </div>
@@ -113,11 +113,11 @@ I noticed @{{company}} is in the [industry] space..."></textarea>
 
         <!-- Preview -->
         <div class="lg:sticky lg:top-4 self-start">
-            <div class="bg-white shadow rounded-lg p-6">
+            <div class="bg-bg-elevated shadow rounded-lg p-6">
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-medium text-gray-900">Preview</h3>
+                    <h3 class="text-lg font-medium text-text-primary">Preview</h3>
                     @if ($previewLead)
-                        <span class="text-xs text-gray-500">
+                        <span class="text-xs text-text-secondary">
                             Using: {{ $previewLead->full_name }} @ {{ $previewLead->company }}
                         </span>
                     @endif
@@ -125,20 +125,20 @@ I noticed @{{company}} is in the [industry] space..."></textarea>
 
                 <div class="border rounded-lg overflow-hidden">
                     <!-- Email Header -->
-                    <div class="bg-gray-50 px-4 py-3 border-b">
+                    <div class="bg-bg-base px-4 py-3 border-b">
                         <div class="text-sm">
-                            <span class="font-medium text-gray-500">To:</span>
-                            <span class="text-gray-900 ml-2">{{ $previewLead?->email ?? 'recipient@example.com' }}</span>
+                            <span class="font-medium text-text-secondary">To:</span>
+                            <span class="text-text-primary ml-2">{{ $previewLead?->email ?? 'recipient@example.com' }}</span>
                         </div>
                         <div class="text-sm mt-1">
-                            <span class="font-medium text-gray-500">Subject:</span>
-                            <span class="text-gray-900 ml-2">{{ $previewSubject ?: '(No subject)' }}</span>
+                            <span class="font-medium text-text-secondary">Subject:</span>
+                            <span class="text-text-primary ml-2">{{ $previewSubject ?: '(No subject)' }}</span>
                         </div>
                     </div>
 
                     <!-- Email Body -->
-                    <div class="px-4 py-4 bg-white">
-                        <div class="prose prose-sm max-w-none text-gray-700 whitespace-pre-wrap">{{ $previewBody ?: '(No content)' }}</div>
+                    <div class="px-4 py-4 bg-bg-elevated">
+                        <div class="prose prose-sm max-w-none text-text-primary whitespace-pre-wrap">{{ $previewBody ?: '(No content)' }}</div>
                     </div>
                 </div>
 

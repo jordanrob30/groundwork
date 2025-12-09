@@ -3,54 +3,54 @@
         <!-- Header -->
         <div class="flex justify-between items-center mb-6">
             <div>
-                <h1 class="text-2xl font-semibold text-gray-900">Mailboxes</h1>
-                <p class="mt-1 text-sm text-gray-600">Manage your connected email accounts</p>
+                <h1 class="text-2xl font-semibold text-text-primary">Mailboxes</h1>
+                <p class="mt-1 text-sm text-text-secondary">Manage your connected email accounts</p>
             </div>
-            <a href="{{ route('mailboxes.create') }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+            <a href="{{ route('mailboxes.create') }}" class="inline-flex items-center px-4 py-2 bg-brand border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-brand-hover focus:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 transition ease-in-out duration-150">
                 Add Mailbox
             </a>
         </div>
 
         <!-- Filters -->
         <div class="mb-4 flex space-x-2">
-            <button wire:click="setFilter(null)" class="px-3 py-1 text-sm rounded-full {{ !$filterStatus ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700' }}">
+            <button wire:click="setFilter(null)" class="px-3 py-1 text-sm rounded-full {{ !$filterStatus ? 'bg-brand text-white' : 'bg-bg-surface text-text-primary' }}">
                 All
             </button>
-            <button wire:click="setFilter('active')" class="px-3 py-1 text-sm rounded-full {{ $filterStatus === 'active' ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-700' }}">
+            <button wire:click="setFilter('active')" class="px-3 py-1 text-sm rounded-full {{ $filterStatus === 'active' ? 'bg-green-600 text-white' : 'bg-bg-surface text-text-primary' }}">
                 Active
             </button>
-            <button wire:click="setFilter('warmup')" class="px-3 py-1 text-sm rounded-full {{ $filterStatus === 'warmup' ? 'bg-yellow-600 text-white' : 'bg-gray-200 text-gray-700' }}">
+            <button wire:click="setFilter('warmup')" class="px-3 py-1 text-sm rounded-full {{ $filterStatus === 'warmup' ? 'bg-yellow-600 text-white' : 'bg-bg-surface text-text-primary' }}">
                 Warming Up
             </button>
-            <button wire:click="setFilter('paused')" class="px-3 py-1 text-sm rounded-full {{ $filterStatus === 'paused' ? 'bg-gray-600 text-white' : 'bg-gray-200 text-gray-700' }}">
+            <button wire:click="setFilter('paused')" class="px-3 py-1 text-sm rounded-full {{ $filterStatus === 'paused' ? 'bg-gray-600 text-white' : 'bg-bg-surface text-text-primary' }}">
                 Paused
             </button>
-            <button wire:click="setFilter('error')" class="px-3 py-1 text-sm rounded-full {{ $filterStatus === 'error' ? 'bg-red-600 text-white' : 'bg-gray-200 text-gray-700' }}">
+            <button wire:click="setFilter('error')" class="px-3 py-1 text-sm rounded-full {{ $filterStatus === 'error' ? 'bg-red-600 text-white' : 'bg-bg-surface text-text-primary' }}">
                 Error
             </button>
         </div>
 
         <!-- Mailbox List -->
         @if($mailboxes->isEmpty())
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-bg-elevated overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-12 text-center">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg class="mx-auto h-12 w-12 text-text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900">No mailboxes</h3>
-                    <p class="mt-1 text-sm text-gray-500">Get started by connecting your email account.</p>
+                    <h3 class="mt-2 text-sm font-medium text-text-primary">No mailboxes</h3>
+                    <p class="mt-1 text-sm text-text-secondary">Get started by connecting your email account.</p>
                     <div class="mt-6">
-                        <a href="{{ route('mailboxes.create') }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700">
+                        <a href="{{ route('mailboxes.create') }}" class="inline-flex items-center px-4 py-2 bg-brand border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-brand-hover">
                             Add Mailbox
                         </a>
                     </div>
                 </div>
             </div>
         @else
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <ul class="divide-y divide-gray-200">
+            <div class="bg-bg-elevated overflow-hidden shadow-sm sm:rounded-lg">
+                <ul class="divide-y divide-border-default">
                     @foreach($mailboxes as $mailbox)
-                        <li class="p-4 hover:bg-gray-50">
+                        <li class="p-4 hover:bg-bg-surface">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center min-w-0 flex-1">
                                     <div class="flex-shrink-0">
@@ -86,10 +86,10 @@
                                         @endswitch
                                     </div>
                                     <div class="ml-4 truncate">
-                                        <p class="text-sm font-medium text-gray-900 truncate">
+                                        <p class="text-sm font-medium text-text-primary truncate">
                                             {{ $mailbox->name }}
                                         </p>
-                                        <p class="text-sm text-gray-500 truncate">
+                                        <p class="text-sm text-text-secondary truncate">
                                             {{ $mailbox->email_address }}
                                         </p>
                                     </div>
@@ -99,10 +99,10 @@
                                     <!-- Status Badge -->
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
                                         @switch($mailbox->status)
-                                            @case('active') bg-green-100 text-green-800 @break
-                                            @case('warmup') bg-yellow-100 text-yellow-800 @break
-                                            @case('paused') bg-gray-100 text-gray-800 @break
-                                            @case('error') bg-red-100 text-red-800 @break
+                                            @case('active') bg-success-bg text-success @break
+                                            @case('warmup') bg-warning-bg text-warning @break
+                                            @case('paused') bg-bg-surface text-text-secondary @break
+                                            @case('error') bg-error-bg text-error @break
                                         @endswitch">
                                         {{ ucfirst($mailbox->status) }}
                                         @if($mailbox->status === 'warmup')
@@ -111,7 +111,7 @@
                                     </span>
 
                                     <!-- Daily Limit -->
-                                    <div class="text-sm text-gray-500">
+                                    <div class="text-sm text-text-secondary">
                                         {{ $mailbox->getCurrentDailyLimit() }}/day
                                     </div>
 
@@ -132,13 +132,13 @@
                                             </button>
                                         @endif
 
-                                        <a href="{{ route('mailboxes.edit', $mailbox) }}" class="text-indigo-600 hover:text-indigo-900">
+                                        <a href="{{ route('mailboxes.edit', $mailbox) }}" class="text-brand hover:text-brand-hover">
                                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                             </svg>
                                         </a>
 
-                                        <a href="{{ route('mailboxes.health', $mailbox) }}" class="text-gray-600 hover:text-gray-900">
+                                        <a href="{{ route('mailboxes.health', $mailbox) }}" class="text-text-secondary hover:text-text-primary">
                                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                                             </svg>
