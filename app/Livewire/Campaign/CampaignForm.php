@@ -6,12 +6,16 @@ namespace App\Livewire\Campaign;
 
 use App\Models\Campaign;
 use App\Models\Mailbox;
+use App\Models\User;
 use App\Services\CampaignService;
+use App\Traits\HandlesImpersonation;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class CampaignForm extends Component
 {
+    use HandlesImpersonation;
+
     public ?Campaign $campaign = null;
 
     public string $name = '';
@@ -70,7 +74,8 @@ class CampaignForm extends Component
             $service->update($this->campaign, $data);
             session()->flash('message', 'Campaign updated successfully.');
         } else {
-            $campaign = $service->create(auth()->user(), $data);
+            $effectiveUser = User::findOrFail($this->getEffectiveUserId());
+            $campaign = $service->create($effectiveUser, $data);
             session()->flash('message', 'Campaign created successfully.');
         }
 
@@ -105,7 +110,7 @@ class CampaignForm extends Component
 
     public function render(): View
     {
-        $mailboxes = Mailbox::forUser(auth()->id())->get();
+        $mailboxes = Mailbox::forUser($this->getEffectiveUserId())->get();
 
         return view('livewire.campaign.campaign-form', [
             'mailboxes' => $mailboxes,

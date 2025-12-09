@@ -1,5 +1,8 @@
 <?php
 
+use App\Livewire\Admin\AuditLog;
+use App\Livewire\Admin\Dashboard as AdminDashboard;
+use App\Livewire\Admin\UserList;
 use App\Livewire\Campaign\CampaignForm;
 use App\Livewire\Campaign\CampaignInsights;
 use App\Livewire\Campaign\CampaignList;
@@ -24,8 +27,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
-    // Profile (from Breeze)
-    Route::view('profile', 'profile')->name('profile');
+    // Profile (from Breeze) - blocked during impersonation for security
+    Route::view('profile', 'profile')->name('profile')->middleware('not-impersonating');
 
     // Mailboxes
     Route::prefix('mailboxes')->name('mailboxes.')->group(function () {
@@ -60,6 +63,35 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/{response}', ResponseView::class)->name('show');
     });
 });
+
+// Admin routes (requires admin role)
+Route::middleware(['auth', 'verified', 'admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+        Route::get('/', AdminDashboard::class)->name('dashboard');
+        Route::get('/users', UserList::class)->name('users.index');
+        Route::get('/audit-log', AuditLog::class)->name('audit-log');
+
+        // Stop impersonation (accessible while impersonating)
+        Route::post('/stop-impersonate', function () {
+            $targetUserId = session('impersonating');
+            $startedAt = session('impersonation_started_at');
+
+            if ($targetUserId) {
+                $targetUser = \App\Models\User::find($targetUserId);
+
+                if ($targetUser && $startedAt) {
+                    $durationSeconds = (int) \Carbon\Carbon::parse($startedAt)->diffInSeconds(now());
+                    \App\Services\AuditLogService::logImpersonationStop($targetUser, $durationSeconds);
+                }
+            }
+
+            session()->forget(['impersonating', 'impersonated_by', 'impersonation_started_at']);
+
+            return redirect()->route('admin.users.index')->with('message', 'Stopped emulating user.');
+        })->name('stop-impersonate')->withoutMiddleware('admin');
+    });
 
 // Dev Tools (local environment only)
 if (app()->environment('local', 'testing')) {

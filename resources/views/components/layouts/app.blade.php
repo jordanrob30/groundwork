@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ $title ?? config('app.name', 'Discovery Engine') }}</title>
+        <title>{{ $title ?? config('app.name', 'Groundwork') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -16,6 +16,11 @@
     </head>
     <body class="font-sans antialiased bg-bg-base text-text-primary">
         <div class="min-h-screen">
+            <!-- Emulation Banner -->
+            @if (session()->has('impersonating'))
+                <x-emulation-banner :user="App\Models\User::find(session('impersonating'))" />
+            @endif
+
             <!-- Navigation - full width background, centered content -->
             <nav class="bg-bg-elevated border-b border-border-default">
                 <div style="max-width: 1024px; margin-left: auto; margin-right: auto;">

@@ -8,12 +8,15 @@ use App\Models\Campaign;
 use App\Models\Mailbox;
 use App\Models\Response;
 use App\Models\SentEmail;
+use App\Traits\HandlesImpersonation;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
 class Dashboard extends Component
 {
+    use HandlesImpersonation;
+
     public Collection $activeCampaigns;
 
     public Collection $recentResponses;
@@ -34,7 +37,7 @@ class Dashboard extends Component
 
     protected function loadDashboardData(): void
     {
-        $userId = auth()->id();
+        $userId = $this->getEffectiveUserId();
 
         $this->activeCampaigns = Campaign::forUser($userId)
             ->where('status', Campaign::STATUS_ACTIVE)

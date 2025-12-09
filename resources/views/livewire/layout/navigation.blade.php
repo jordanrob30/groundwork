@@ -21,8 +21,8 @@ new class extends Component
         <div class="flex">
             <!-- Logo -->
             <div class="shrink-0 flex items-center">
-                <a href="{{ route('dashboard') }}" wire:navigate class="text-xl font-bold text-brand">
-                    Discovery Engine
+                <a href="{{ route('dashboard') }}" wire:navigate>
+                    <x-application-logo />
                 </a>
             </div>
 
@@ -40,6 +40,11 @@ new class extends Component
                 <x-nav-link :href="route('responses.index')" :active="request()->routeIs('responses.*')" wire:navigate>
                     {{ __('Responses') }}
                 </x-nav-link>
+                @can('access-admin')
+                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')" wire:navigate>
+                        {{ __('Admin') }}
+                    </x-nav-link>
+                @endcan
             </div>
         </div>
 
@@ -99,6 +104,11 @@ new class extends Component
             <x-responsive-nav-link :href="route('responses.index')" :active="request()->routeIs('responses.*')" wire:navigate>
                 {{ __('Responses') }}
             </x-responsive-nav-link>
+            @can('access-admin')
+                <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')" wire:navigate>
+                    {{ __('Admin') }}
+                </x-responsive-nav-link>
+            @endcan
         </div>
 
         <!-- Responsive Settings Options -->

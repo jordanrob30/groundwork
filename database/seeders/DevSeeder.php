@@ -19,14 +19,25 @@ class DevSeeder extends Seeder
 {
     public function run(): void
     {
-        // Create dev user
+        // Create admin user
+        $admin = User::factory()->create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'password' => bcrypt('password'),
+            'role' => User::ROLE_ADMIN,
+        ]);
+
+        $this->command->info('Created admin user: admin@example.com / password');
+
+        // Create dev user (standard user)
         $user = User::factory()->create([
             'name' => 'Dev User',
             'email' => 'dev@example.com',
             'password' => bcrypt('password'),
+            'role' => User::ROLE_USER,
         ]);
 
-        $this->command->info("Created user: dev@example.com / password");
+        $this->command->info('Created user: dev@example.com / password');
 
         // Create Greenmail-configured mailbox
         $mailbox = Mailbox::factory()->greenmail()->create([
@@ -95,7 +106,8 @@ class DevSeeder extends Seeder
 
         $this->command->newLine();
         $this->command->info('Dev environment ready!');
-        $this->command->info('Login: dev@example.com / password');
+        $this->command->info('Admin Login: admin@example.com / password');
+        $this->command->info('User Login: dev@example.com / password');
         $this->command->info('Dev Mail Tool: /dev/mail');
     }
 }
