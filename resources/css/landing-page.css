@@ -1,0 +1,167 @@
+/**
+ * Landing Page Styles
+ * Feature: 004-brochure-landing-page
+ *
+ * Additional styles for the brochure landing page
+ * Uses existing dark mode design tokens from app.css
+ */
+
+/* =============================================================
+   SMOOTH SCROLL BEHAVIOR
+   ============================================================= */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Disable smooth scroll for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* =============================================================
+   CANVAS POSITIONING (Hero, Features, Pricing)
+   ============================================================= */
+#hero-canvas,
+#features-canvas,
+#pricing-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none; /* Allow clicks to pass through */
+}
+
+#hero-canvas canvas,
+#features-canvas canvas,
+#pricing-canvas canvas {
+    display: block;
+}
+
+/* =============================================================
+   NAVIGATION STYLES
+   ============================================================= */
+.landing-nav {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.landing-nav-link {
+    transition: color 0.2s ease;
+}
+
+.landing-nav-link:hover {
+    color: var(--color-brand);
+}
+
+/* =============================================================
+   SECTION TRANSITIONS
+   ============================================================= */
+.landing-section {
+    scroll-margin-top: 80px; /* Account for fixed navigation */
+}
+
+/* =============================================================
+   PRICING CARD STYLES
+   ============================================================= */
+.pricing-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pricing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.pricing-card-highlighted {
+    position: relative;
+}
+
+.pricing-card-highlighted::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, var(--color-brand), var(--color-accent));
+    border-radius: inherit;
+    z-index: -1;
+}
+
+/* =============================================================
+   FEATURE CARD STYLES
+   ============================================================= */
+.feature-card {
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-2px);
+    background-color: var(--color-bg-surface);
+}
+
+/* =============================================================
+   CTA BUTTON ANIMATIONS
+   ============================================================= */
+.cta-button {
+    transition: all 0.2s ease;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+}
+
+.cta-button:active {
+    transform: translateY(0);
+}
+
+/* =============================================================
+   MOBILE-SPECIFIC STYLES
+   ============================================================= */
+@media (max-width: 640px) {
+    .landing-section {
+        scroll-margin-top: 60px;
+    }
+
+    .pricing-card:hover {
+        transform: none; /* Disable hover transform on mobile */
+    }
+
+    .feature-card:hover {
+        transform: none;
+    }
+}
+
+/* =============================================================
+   ANIMATION UTILITIES
+   ============================================================= */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Stagger delays for list items */
+.animate-delay-100 { animation-delay: 0.1s; }
+.animate-delay-200 { animation-delay: 0.2s; }
+.animate-delay-300 { animation-delay: 0.3s; }
+.animate-delay-400 { animation-delay: 0.4s; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .animate-fade-in-up {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+}
