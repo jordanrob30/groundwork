@@ -7,6 +7,8 @@ Auto-generated from all feature plans. Last updated: 2025-12-08
 - N/A (styling changes only, no data model changes) (002-dark-mode-branding)
 - PHP 8.3 + Laravel Breeze (auth), Tailwind CSS (styling), Alpine.js (interactivity) (003-admin-permissions)
 - MySQL 8 (via Laravel Sail) (003-admin-permissions)
+- PHP 8.3 + JavaScript (ES6+) + Laravel 12, Livewire 3, Tailwind CSS 3.1+, p5.js (new dependency) (004-brochure-landing-page)
+- N/A (static landing page - no database interactions) (004-brochure-landing-page)
 
 - PHP 8.3 with Laravel 11 + Livewire 3, Tailwind CSS, Redis, Claude API (claude-sonnet-4-20250514) (001-discovery-engine)
 
@@ -26,9 +28,9 @@ tests/
 PHP 8.3 with Laravel 11: Follow standard conventions
 
 ## Recent Changes
+- 004-brochure-landing-page: Added PHP 8.3 + JavaScript (ES6+) + Laravel 12, Livewire 3, Tailwind CSS 3.1+, p5.js (new dependency)
 - 003-admin-permissions: Added PHP 8.3 + Laravel Breeze (auth), Tailwind CSS (styling), Alpine.js (interactivity)
 - 003-admin-permissions: Added [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
-- 002-dark-mode-branding: Added PHP 8.3, JavaScript (ES6+) + Laravel 11, Livewire 3, Tailwind CSS 3.1+, Alpine.js
 
 
 <!-- MANUAL ADDITIONS START -->
