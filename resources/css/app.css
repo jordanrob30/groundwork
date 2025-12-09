@@ -1,3 +1,6 @@
+/* Import landing page styles first (before @tailwind directives) */
+@import './landing-page.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -182,3 +185,4 @@ select {
   background-size: 1.5em 1.5em;
   padding-right: 2.5rem;
 }
+
