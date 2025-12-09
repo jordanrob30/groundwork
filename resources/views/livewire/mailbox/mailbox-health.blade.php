@@ -4,7 +4,7 @@
         <div class="mb-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-2xl font-semibold text-gray-900">{{ $mailbox->name }}</h1>
+                    <h1 class="text-2xl font-semibold text-text-primary">{{ $mailbox->name }}</h1>
                     <p class="mt-1 text-sm text-gray-600">{{ $mailbox->email_address }}</p>
                 </div>
                 <a href="{{ route('mailboxes.index') }}" class="text-sm text-indigo-600 hover:text-indigo-900">
@@ -15,18 +15,18 @@
 
         <div class="space-y-6">
             <!-- Status Card -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-bg-elevated overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Status Overview</h3>
+                    <h3 class="text-lg font-medium text-text-primary mb-4">Status Overview</h3>
 
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <!-- Status -->
-                        <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="bg-bg-base rounded-lg p-4">
                             <dt class="text-sm font-medium text-gray-500">Status</dt>
                             <dd class="mt-1 flex items-center">
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
                                     @switch($mailbox->status)
-                                        @case('active') bg-green-100 text-green-800 @break
+                                        @case('active') bg-green-100 text-success @break
                                         @case('warmup') bg-yellow-100 text-yellow-800 @break
                                         @case('paused') bg-gray-100 text-gray-800 @break
                                         @case('error') bg-red-100 text-red-800 @break
@@ -37,15 +37,15 @@
                         </div>
 
                         <!-- Daily Limit -->
-                        <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="bg-bg-base rounded-lg p-4">
                             <dt class="text-sm font-medium text-gray-500">Daily Limit</dt>
-                            <dd class="mt-1 text-2xl font-semibold text-gray-900">
+                            <dd class="mt-1 text-2xl font-semibold text-text-primary">
                                 {{ $mailbox->getCurrentDailyLimit() }}
                             </dd>
                         </div>
 
                         <!-- Warmup Progress -->
-                        <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="bg-bg-base rounded-lg p-4">
                             <dt class="text-sm font-medium text-gray-500">Warmup Progress</dt>
                             <dd class="mt-1">
                                 @if($mailbox->warmup_enabled)
@@ -53,7 +53,7 @@
                                         <div class="flex-1 bg-gray-200 rounded-full h-2 mr-2">
                                             <div class="bg-indigo-600 h-2 rounded-full" style="width: {{ $warmupProgress }}%"></div>
                                         </div>
-                                        <span class="text-sm text-gray-900">{{ $warmupProgress }}%</span>
+                                        <span class="text-sm text-text-primary">{{ $warmupProgress }}%</span>
                                     </div>
                                     <p class="text-xs text-gray-500 mt-1">Day {{ $mailbox->warmup_day }} of 14</p>
                                 @else
@@ -63,9 +63,9 @@
                         </div>
 
                         <!-- Last Polled -->
-                        <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="bg-bg-base rounded-lg p-4">
                             <dt class="text-sm font-medium text-gray-500">Last Polled</dt>
-                            <dd class="mt-1 text-sm text-gray-900">
+                            <dd class="mt-1 text-sm text-text-primary">
                                 {{ $mailbox->last_polled_at ? $mailbox->last_polled_at->diffForHumans() : 'Never' }}
                             </dd>
                         </div>
@@ -99,17 +99,17 @@
             @endif
 
             <!-- Connection Test -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-bg-elevated overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Connection Test</h3>
+                    <h3 class="text-lg font-medium text-text-primary mb-4">Connection Test</h3>
 
-                    <button wire:click="testConnection" wire:loading.attr="disabled" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <button wire:click="testConnection" wire:loading.attr="disabled" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-bg-elevated hover:bg-bg-base focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         <span wire:loading.remove wire:target="testConnection">Test SMTP & IMAP Connection</span>
                         <span wire:loading wire:target="testConnection">Testing...</span>
                     </button>
 
                     @if($testResult)
-                        <div class="mt-4 p-4 rounded-md {{ $testResult['success'] ? 'bg-green-50' : 'bg-red-50' }}">
+                        <div class="mt-4 p-4 rounded-md {{ $testResult['success'] ? 'bg-success-bg' : 'bg-red-50' }}">
                             <div class="flex">
                                 <div class="flex-shrink-0">
                                     @if($testResult['success'])
@@ -123,7 +123,7 @@
                                     @endif
                                 </div>
                                 <div class="ml-3">
-                                    <h4 class="text-sm font-medium {{ $testResult['success'] ? 'text-green-800' : 'text-red-800' }}">
+                                    <h4 class="text-sm font-medium {{ $testResult['success'] ? 'text-success' : 'text-red-800' }}">
                                         {{ $testResult['success'] ? 'All connections successful!' : 'Connection failed' }}
                                     </h4>
                                     <div class="mt-2 text-sm {{ $testResult['success'] ? 'text-green-700' : 'text-red-700' }}">
@@ -138,9 +138,9 @@
             </div>
 
             <!-- Sending Statistics -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-bg-elevated overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Last 7 Days Statistics</h3>
+                    <h3 class="text-lg font-medium text-text-primary mb-4">Last 7 Days Statistics</h3>
 
                     @if(count($recentStats) > 0)
                         <div class="overflow-x-auto">
@@ -158,12 +158,12 @@
                                 <tbody class="divide-y divide-gray-200">
                                     @foreach($recentStats as $stat)
                                         <tr>
-                                            <td class="px-4 py-3 text-sm text-gray-900">{{ \Carbon\Carbon::parse($stat['date'])->format('M j, Y') }}</td>
-                                            <td class="px-4 py-3 text-sm text-gray-900">{{ $stat['emails_sent'] }}</td>
+                                            <td class="px-4 py-3 text-sm text-text-primary">{{ \Carbon\Carbon::parse($stat['date'])->format('M j, Y') }}</td>
+                                            <td class="px-4 py-3 text-sm text-text-primary">{{ $stat['emails_sent'] }}</td>
                                             <td class="px-4 py-3 text-sm text-green-600">{{ $stat['emails_delivered'] }}</td>
                                             <td class="px-4 py-3 text-sm text-red-600">{{ $stat['emails_bounced'] }}</td>
                                             <td class="px-4 py-3 text-sm text-orange-600">{{ $stat['emails_failed'] }}</td>
-                                            <td class="px-4 py-3 text-sm {{ $stat['bounce_rate'] > 5 ? 'text-red-600' : 'text-gray-900' }}">{{ $stat['bounce_rate'] }}%</td>
+                                            <td class="px-4 py-3 text-sm {{ $stat['bounce_rate'] > 5 ? 'text-red-600' : 'text-text-primary' }}">{{ $stat['bounce_rate'] }}%</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -176,26 +176,26 @@
             </div>
 
             <!-- Configuration Summary -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-bg-elevated overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">Configuration</h3>
+                    <h3 class="text-lg font-medium text-text-primary mb-4">Configuration</h3>
 
                     <dl class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <dt class="text-sm font-medium text-gray-500">SMTP Server</dt>
-                            <dd class="mt-1 text-sm text-gray-900">{{ $mailbox->smtp_host }}:{{ $mailbox->smtp_port }} ({{ strtoupper($mailbox->smtp_encryption) }})</dd>
+                            <dd class="mt-1 text-sm text-text-primary">{{ $mailbox->smtp_host }}:{{ $mailbox->smtp_port }} ({{ strtoupper($mailbox->smtp_encryption) }})</dd>
                         </div>
                         <div>
                             <dt class="text-sm font-medium text-gray-500">IMAP Server</dt>
-                            <dd class="mt-1 text-sm text-gray-900">{{ $mailbox->imap_host }}:{{ $mailbox->imap_port }} ({{ strtoupper($mailbox->imap_encryption) }})</dd>
+                            <dd class="mt-1 text-sm text-text-primary">{{ $mailbox->imap_host }}:{{ $mailbox->imap_port }} ({{ strtoupper($mailbox->imap_encryption) }})</dd>
                         </div>
                         <div>
                             <dt class="text-sm font-medium text-gray-500">Send Window</dt>
-                            <dd class="mt-1 text-sm text-gray-900">{{ substr($mailbox->send_window_start, 0, 5) }} - {{ substr($mailbox->send_window_end, 0, 5) }} ({{ $mailbox->timezone }})</dd>
+                            <dd class="mt-1 text-sm text-text-primary">{{ substr($mailbox->send_window_start, 0, 5) }} - {{ substr($mailbox->send_window_end, 0, 5) }} ({{ $mailbox->timezone }})</dd>
                         </div>
                         <div>
                             <dt class="text-sm font-medium text-gray-500">Skip Weekends</dt>
-                            <dd class="mt-1 text-sm text-gray-900">{{ $mailbox->skip_weekends ? 'Yes' : 'No' }}</dd>
+                            <dd class="mt-1 text-sm text-text-primary">{{ $mailbox->skip_weekends ? 'Yes' : 'No' }}</dd>
                         </div>
                     </dl>
 

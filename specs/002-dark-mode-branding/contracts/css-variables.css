@@ -1,11 +1,17 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* =============================================================
-   DARK MODE DESIGN TOKENS - CSS Custom Properties
-   Feature: 002-dark-mode-branding
-   ============================================================= */
+/**
+ * CSS Custom Properties for Dark Mode Branding
+ *
+ * Feature: 002-dark-mode-branding
+ * Generated: 2025-12-09
+ *
+ * This file defines the CSS custom properties that power the dark mode theme.
+ * Import this into resources/css/app.css or include directly.
+ *
+ * Usage:
+ * @import './specs/002-dark-mode-branding/contracts/css-variables.css';
+ *
+ * Or copy the :root block into resources/css/app.css
+ */
 
 :root {
   /* =============================================================
@@ -121,64 +127,4 @@ body {
 /* Remove default focus outline (use focus-visible instead) */
 :focus:not(:focus-visible) {
   outline: none;
-}
-
-/* =============================================================
-   FORM CONTROL STYLES FOR DARK MODE
-   ============================================================= */
-
-/* Range input styling */
-input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  background: transparent;
-  cursor: pointer;
-}
-
-input[type="range"]::-webkit-slider-runnable-track {
-  background: var(--color-bg-surface);
-  height: 8px;
-  border-radius: 4px;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  background: var(--color-brand);
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  margin-top: -6px;
-  border: 2px solid var(--color-bg-base);
-}
-
-input[type="range"]::-webkit-slider-thumb:hover {
-  background: var(--color-brand-hover);
-}
-
-input[type="range"]::-moz-range-track {
-  background: var(--color-bg-surface);
-  height: 8px;
-  border-radius: 4px;
-}
-
-input[type="range"]::-moz-range-thumb {
-  background: var(--color-brand);
-  height: 16px;
-  width: 16px;
-  border-radius: 50%;
-  border: 2px solid var(--color-bg-base);
-}
-
-input[type="range"]::-moz-range-thumb:hover {
-  background: var(--color-brand-hover);
-}
-
-/* Select dropdown arrow color for dark mode */
-select {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23a0a0a0' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-  background-position: right 0.5rem center;
-  background-repeat: no-repeat;
-  background-size: 1.5em 1.5em;
-  padding-right: 2.5rem;
 }
