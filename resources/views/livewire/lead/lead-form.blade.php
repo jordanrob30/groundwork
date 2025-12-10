@@ -21,7 +21,7 @@
                 <div class="md:col-span-2">
                     <label for="email" class="block text-sm font-medium text-text-primary">Email Address <span class="text-red-500">*</span></label>
                     <input type="email" wire:model="email" id="email"
-                        class="mt-1 block w-full rounded-md border-border-default shadow-sm focus:border-brand focus:ring-brand sm:text-sm"
+                        class="mt-1 block w-full rounded-md border-border-default bg-bg-elevated text-text-primary placeholder-text-muted shadow-sm focus:border-brand focus:ring-brand sm:text-sm"
                         placeholder="contact@company.com">
                     @error('email') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
@@ -30,7 +30,7 @@
                 <div>
                     <label for="first_name" class="block text-sm font-medium text-text-primary">First Name</label>
                     <input type="text" wire:model="first_name" id="first_name"
-                        class="mt-1 block w-full rounded-md border-border-default shadow-sm focus:border-brand focus:ring-brand sm:text-sm"
+                        class="mt-1 block w-full rounded-md border-border-default bg-bg-elevated text-text-primary placeholder-text-muted shadow-sm focus:border-brand focus:ring-brand sm:text-sm"
                         placeholder="John">
                     @error('first_name') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
@@ -39,7 +39,7 @@
                 <div>
                     <label for="last_name" class="block text-sm font-medium text-text-primary">Last Name</label>
                     <input type="text" wire:model="last_name" id="last_name"
-                        class="mt-1 block w-full rounded-md border-border-default shadow-sm focus:border-brand focus:ring-brand sm:text-sm"
+                        class="mt-1 block w-full rounded-md border-border-default bg-bg-elevated text-text-primary placeholder-text-muted shadow-sm focus:border-brand focus:ring-brand sm:text-sm"
                         placeholder="Smith">
                     @error('last_name') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
@@ -48,7 +48,7 @@
                 <div>
                     <label for="company" class="block text-sm font-medium text-text-primary">Company</label>
                     <input type="text" wire:model="company" id="company"
-                        class="mt-1 block w-full rounded-md border-border-default shadow-sm focus:border-brand focus:ring-brand sm:text-sm"
+                        class="mt-1 block w-full rounded-md border-border-default bg-bg-elevated text-text-primary placeholder-text-muted shadow-sm focus:border-brand focus:ring-brand sm:text-sm"
                         placeholder="Acme Inc.">
                     @error('company') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
@@ -57,7 +57,7 @@
                 <div>
                     <label for="role" class="block text-sm font-medium text-text-primary">Role / Title</label>
                     <input type="text" wire:model="role" id="role"
-                        class="mt-1 block w-full rounded-md border-border-default shadow-sm focus:border-brand focus:ring-brand sm:text-sm"
+                        class="mt-1 block w-full rounded-md border-border-default bg-bg-elevated text-text-primary placeholder-text-muted shadow-sm focus:border-brand focus:ring-brand sm:text-sm"
                         placeholder="CEO">
                     @error('role') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
@@ -66,7 +66,7 @@
                 <div class="md:col-span-2">
                     <label for="linkedin_url" class="block text-sm font-medium text-text-primary">LinkedIn URL</label>
                     <input type="url" wire:model="linkedin_url" id="linkedin_url"
-                        class="mt-1 block w-full rounded-md border-border-default shadow-sm focus:border-brand focus:ring-brand sm:text-sm"
+                        class="mt-1 block w-full rounded-md border-border-default bg-bg-elevated text-text-primary placeholder-text-muted shadow-sm focus:border-brand focus:ring-brand sm:text-sm"
                         placeholder="https://linkedin.com/in/johnsmith">
                     @error('linkedin_url') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
@@ -83,7 +83,7 @@
                     <div>
                         <label for="custom_field_{{ $i }}" class="block text-sm font-medium text-text-primary">Custom Field {{ $i }}</label>
                         <input type="text" wire:model="custom_field_{{ $i }}" id="custom_field_{{ $i }}"
-                            class="mt-1 block w-full rounded-md border-border-default shadow-sm focus:border-brand focus:ring-brand sm:text-sm">
+                            class="mt-1 block w-full rounded-md border-border-default bg-bg-elevated text-text-primary placeholder-text-muted shadow-sm focus:border-brand focus:ring-brand sm:text-sm">
                         @error('custom_field_' . $i) <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
                 @endfor

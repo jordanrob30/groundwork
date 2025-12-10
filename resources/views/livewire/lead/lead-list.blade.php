@@ -30,7 +30,7 @@
     <div class="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div class="flex-1 max-w-md">
             <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search by email, name, or company..."
-                class="block w-full rounded-md border-border-default shadow-sm focus:border-brand focus:ring-brand sm:text-sm">
+                class="block w-full rounded-md border-border-default bg-bg-elevated text-text-primary placeholder-text-muted shadow-sm focus:border-brand focus:ring-brand sm:text-sm">
         </div>
 
         <div class="flex flex-wrap gap-2">
@@ -53,7 +53,7 @@
             <span class="text-sm text-brand">{{ count($selectedLeadIds) }} selected</span>
             <button wire:click="deselectAll" class="text-sm text-brand hover:underline">Clear</button>
             <div class="flex gap-2">
-                <select wire:change="bulkChangeStatus($event.target.value)" class="text-sm rounded-md border-border-default">
+                <select wire:change="bulkChangeStatus($event.target.value)" class="text-sm rounded-md border-border-default bg-bg-elevated text-text-primary">
                     <option value="">Change status...</option>
                     @foreach (\App\Models\Lead::STATUSES as $status)
                         <option value="{{ $status }}">{{ ucfirst(str_replace('_', ' ', $status)) }}</option>

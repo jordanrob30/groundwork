@@ -6,10 +6,12 @@ namespace App\Services;
 
 use App\Events\ResponseReceived;
 use App\Exceptions\MailboxConnectionException;
+use App\Metrics\Collectors\CampaignFlowCollector;
 use App\Models\Mailbox;
 use App\Models\MessageReference;
 use App\Models\Response;
 use App\Models\SentEmail;
+use Illuminate\Support\Facades\Log;
 use Webklex\IMAP\Facades\Client;
 use ZBateson\MailMimeParser\MailMimeParser;
 
@@ -79,6 +81,23 @@ class ReplyDetectionService
                     $this->createResponse($sentEmail, $message);
                     $message->setFlag('Seen');
                     $processed++;
+
+                    // Record reply detected metric
+                    try {
+                        $collector = app(CampaignFlowCollector::class);
+                        $collector->incrementRepliesDetected($sentEmail->campaign_id, true);
+                    } catch (\Throwable $e) {
+                        Log::debug('Failed to record reply detected metric', ['error' => $e->getMessage()]);
+                    }
+                } else {
+                    // Record unmatched reply metric
+                    try {
+                        $collector = app(CampaignFlowCollector::class);
+                        // Use 0 as campaign_id for unmatched replies
+                        $collector->incrementRepliesDetected(0, false);
+                    } catch (\Throwable $e) {
+                        Log::debug('Failed to record unmatched reply metric', ['error' => $e->getMessage()]);
+                    }
                 }
             }
 

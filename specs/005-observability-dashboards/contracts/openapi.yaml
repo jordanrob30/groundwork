@@ -1,0 +1,381 @@
+openapi: 3.1.0
+info:
+  title: Groundwork Observability API
+  description: |
+    API endpoints for frontend observability data collection.
+    These endpoints receive metrics and errors from the browser and forward them to the observability stack.
+  version: 1.0.0
+  contact:
+    name: Groundwork Team
+
+servers:
+  - url: /api/observability
+    description: Observability API endpoints
+
+paths:
+  /web-vitals:
+    post:
+      operationId: reportWebVitals
+      summary: Report Core Web Vitals metrics
+      description: |
+        Receives Core Web Vitals metrics from the browser.
+        Metrics are aggregated and exported to Prometheus.
+        Uses sendBeacon API for reliable delivery.
+      tags:
+        - Frontend Observability
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebVitalsReport'
+            examples:
+              lcp:
+                summary: LCP metric report
+                value:
+                  name: LCP
+                  value: 2.5
+                  page: /dashboard
+                  deviceType: desktop
+                  sessionId: abc123
+                  timestamp: "2025-12-09T14:30:00.000Z"
+              cls:
+                summary: CLS metric report
+                value:
+                  name: CLS
+                  value: 0.1
+                  page: /campaigns
+                  deviceType: mobile
+                  sessionId: xyz789
+                  timestamp: "2025-12-09T14:30:00.000Z"
+      responses:
+        '204':
+          description: Metric received successfully (no content returned)
+        '400':
+          description: Invalid metric data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /js-errors:
+    post:
+      operationId: reportJsError
+      summary: Report JavaScript errors
+      description: |
+        Receives JavaScript error reports from the browser.
+        Errors are logged to the centralized logging system.
+      tags:
+        - Frontend Observability
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JsErrorReport'
+            examples:
+              uncaughtError:
+                summary: Uncaught exception
+                value:
+                  message: "Cannot read property 'foo' of undefined"
+                  source: "https://app.groundwork.io/js/app.js"
+                  lineno: 123
+                  colno: 45
+                  stack: "TypeError: Cannot read property 'foo' of undefined\n    at Object.bar (app.js:123:45)"
+                  page: "https://app.groundwork.io/dashboard"
+                  browser: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"
+                  timestamp: "2025-12-09T14:30:00.000Z"
+      responses:
+        '204':
+          description: Error report received successfully
+        '400':
+          description: Invalid error data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /livewire-metrics:
+    post:
+      operationId: reportLivewireMetrics
+      summary: Report Livewire component performance metrics
+      description: |
+        Receives Livewire component render and update timing data.
+        Metrics are aggregated and exported to Prometheus.
+      tags:
+        - Frontend Observability
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LivewireMetricsReport'
+            examples:
+              componentRender:
+                summary: Component render metric
+                value:
+                  component: Dashboard
+                  event: render
+                  duration: 150
+                  page: /dashboard
+                  timestamp: "2025-12-09T14:30:00.000Z"
+      responses:
+        '204':
+          description: Metrics received successfully
+        '400':
+          description: Invalid metric data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /page-load:
+    post:
+      operationId: reportPageLoad
+      summary: Report page load timing metrics
+      description: |
+        Receives Navigation Timing API data for full page loads.
+        Complements Core Web Vitals with detailed timing breakdown.
+      tags:
+        - Frontend Observability
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PageLoadReport'
+            examples:
+              pageLoad:
+                summary: Page load timing
+                value:
+                  page: /campaigns/123
+                  domReady: 800
+                  loadComplete: 1500
+                  ttfb: 200
+                  deviceType: desktop
+                  connectionType: 4g
+                  timestamp: "2025-12-09T14:30:00.000Z"
+      responses:
+        '204':
+          description: Timing data received successfully
+        '400':
+          description: Invalid timing data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+components:
+  schemas:
+    WebVitalsReport:
+      type: object
+      required:
+        - name
+        - value
+        - page
+        - deviceType
+        - sessionId
+        - timestamp
+      properties:
+        name:
+          type: string
+          enum: [LCP, FID, CLS, INP, TTFB]
+          description: Core Web Vital metric name
+        value:
+          type: number
+          minimum: 0
+          description: Metric value (seconds for timing metrics, unitless for CLS)
+        page:
+          type: string
+          maxLength: 255
+          description: Page path where metric was captured
+        deviceType:
+          type: string
+          enum: [desktop, mobile, tablet]
+          description: Device type classification
+        userId:
+          type: integer
+          nullable: true
+          description: Authenticated user ID if available
+        sessionId:
+          type: string
+          maxLength: 64
+          description: Browser session identifier
+        timestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when metric was captured
+
+    JsErrorReport:
+      type: object
+      required:
+        - message
+        - source
+        - lineno
+        - colno
+        - page
+        - browser
+        - timestamp
+      properties:
+        message:
+          type: string
+          maxLength: 1000
+          description: Error message
+        source:
+          type: string
+          format: uri
+          description: Source file URL where error occurred
+        lineno:
+          type: integer
+          minimum: 0
+          description: Line number in source file
+        colno:
+          type: integer
+          minimum: 0
+          description: Column number in source file
+        stack:
+          type: string
+          maxLength: 5000
+          nullable: true
+          description: Stack trace if available
+        page:
+          type: string
+          format: uri
+          description: Page URL where error occurred
+        browser:
+          type: string
+          maxLength: 500
+          description: Browser user agent string
+        userId:
+          type: integer
+          nullable: true
+          description: Authenticated user ID if available
+        timestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when error occurred
+
+    LivewireMetricsReport:
+      type: object
+      required:
+        - component
+        - event
+        - duration
+        - page
+        - timestamp
+      properties:
+        component:
+          type: string
+          maxLength: 100
+          description: Livewire component class name
+        event:
+          type: string
+          enum: [render, update, hydrate, dehydrate]
+          description: Livewire lifecycle event
+        duration:
+          type: number
+          minimum: 0
+          description: Event duration in milliseconds
+        page:
+          type: string
+          maxLength: 255
+          description: Page path where component is rendered
+        timestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp
+
+    PageLoadReport:
+      type: object
+      required:
+        - page
+        - domReady
+        - loadComplete
+        - ttfb
+        - deviceType
+        - timestamp
+      properties:
+        page:
+          type: string
+          maxLength: 255
+          description: Page path
+        domReady:
+          type: number
+          minimum: 0
+          description: DOM ready time in milliseconds
+        loadComplete:
+          type: number
+          minimum: 0
+          description: Full page load time in milliseconds
+        ttfb:
+          type: number
+          minimum: 0
+          description: Time to first byte in milliseconds
+        deviceType:
+          type: string
+          enum: [desktop, mobile, tablet]
+          description: Device type classification
+        connectionType:
+          type: string
+          enum: [4g, 3g, 2g, slow-2g, unknown]
+          nullable: true
+          description: Network connection type if available
+        timestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp
+
+    ValidationError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: The given data was invalid.
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          example:
+            name: ["The name field is required."]
+            value: ["The value must be a number."]
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Too many requests.
+        retry_after:
+          type: integer
+          description: Seconds until rate limit resets
+          example: 60
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Optional - metrics can be collected from authenticated or guest users
+
+tags:
+  - name: Frontend Observability
+    description: Endpoints for collecting frontend performance and error data

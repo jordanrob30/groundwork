@@ -1,0 +1,53 @@
+// Alloy configuration for collecting Laravel logs and shipping to Loki
+
+// Local file log source - Laravel application logs
+local.file_match "laravel_logs" {
+  path_targets = [{
+    __address__ = "localhost",
+    __path__    = "/var/log/laravel/*.log",
+    job         = "laravel",
+    service     = "groundwork",
+  }]
+}
+
+// Log scraping component
+loki.source.file "laravel" {
+  targets    = local.file_match.laravel_logs.targets
+  forward_to = [loki.process.laravel.receiver]
+}
+
+// Process logs - parse JSON and add labels
+loki.process "laravel" {
+  forward_to = [loki.write.default.receiver]
+
+  // Parse JSON logs
+  stage.json {
+    expressions = {
+      level   = "level",
+      message = "message",
+      channel = "channel",
+    }
+  }
+
+  // Add parsed fields as labels
+  stage.labels {
+    values = {
+      level   = "",
+      channel = "",
+    }
+  }
+
+  // Add environment label
+  stage.static_labels {
+    values = {
+      environment = "local",
+    }
+  }
+}
+
+// Write to Loki
+loki.write "default" {
+  endpoint {
+    url = "http://loki:3100/loki/api/v1/push"
+  }
+}

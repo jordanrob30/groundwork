@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Metrics\Collectors\AdminActivityCollector;
 use App\Models\AdminAuditLog;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,6 +23,14 @@ class AuditLogService
         ?Request $request = null
     ): AdminAuditLog {
         $request = $request ?? request();
+
+        // Record metric for admin action
+        try {
+            $collector = app(AdminActivityCollector::class);
+            $collector->incrementAdminAction($action, auth()->id());
+        } catch (\Throwable $e) {
+            // Silently fail to avoid impacting audit logging
+        }
 
         return AdminAuditLog::create([
             'admin_id' => auth()->id(),
@@ -62,6 +71,14 @@ class AuditLogService
      */
     public static function logRoleChange(User $targetUser, string $fromRole, string $toRole): AdminAuditLog
     {
+        // Record role change metric
+        try {
+            $collector = app(AdminActivityCollector::class);
+            $collector->incrementRoleChange($fromRole, $toRole);
+        } catch (\Throwable $e) {
+            // Silently fail to avoid impacting audit logging
+        }
+
         return self::log(
             AdminAuditLog::ACTION_ROLE_CHANGE,
             $targetUser,
