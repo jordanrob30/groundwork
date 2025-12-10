@@ -8,6 +8,7 @@ use App\Events\EmailBounced;
 use App\Events\EmailFailed;
 use App\Events\EmailSent;
 use App\Jobs\SendEmailJob;
+use App\Metrics\Collectors\CampaignFlowCollector;
 use App\Models\Campaign;
 use App\Models\EmailTemplate;
 use App\Models\Lead;
@@ -16,6 +17,7 @@ use App\Models\MailboxSendingStat;
 use App\Models\MessageReference;
 use App\Models\SentEmail;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Symfony\Component\Mailer\Transport\Dsn;
 use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransportFactory;
@@ -215,6 +217,14 @@ class SendEngineService
         ]);
 
         $lead->update(['status' => Lead::STATUS_QUEUED]);
+
+        // Record metric for email queued
+        try {
+            $collector = app(CampaignFlowCollector::class);
+            $collector->incrementEmailQueued($campaign->id, $campaign->mailbox_id);
+        } catch (\Throwable $e) {
+            Log::debug('Failed to record email queued metric', ['error' => $e->getMessage()]);
+        }
 
         return $sentEmail;
     }

@@ -64,7 +64,7 @@
                                 @if ($field === 'email') <span class="text-red-500">*</span> @endif
                             </label>
                             <select wire:model="columnMapping.{{ $field }}"
-                                class="mt-1 block w-full rounded-md border-border-default shadow-sm focus:border-brand focus:ring-brand sm:text-sm">
+                                class="mt-1 block w-full rounded-md border-border-default bg-bg-elevated text-text-primary shadow-sm focus:border-brand focus:ring-brand sm:text-sm">
                                 <option value="">-- Select column --</option>
                                 @foreach ($headers as $header)
                                     <option value="{{ $header }}">{{ $header }}</option>

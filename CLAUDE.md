@@ -9,6 +9,8 @@ Auto-generated from all feature plans. Last updated: 2025-12-08
 - MySQL 8 (via Laravel Sail) (003-admin-permissions)
 - PHP 8.3 + JavaScript (ES6+) + Laravel 12, Livewire 3, Tailwind CSS 3.1+, p5.js (new dependency) (004-brochure-landing-page)
 - N/A (static landing page - no database interactions) (004-brochure-landing-page)
+- PHP 8.3 + JavaScript (ES6+) + Laravel 11, Livewire 3, Tailwind CSS, spatie/laravel-prometheus, web-vitals (npm) (005-observability-dashboards)
+- MySQL 8 (existing), Prometheus (metrics), Loki (logs), Redis (metric aggregation) (005-observability-dashboards)
 
 - PHP 8.3 with Laravel 11 + Livewire 3, Tailwind CSS, Redis, Claude API (claude-sonnet-4-20250514) (001-discovery-engine)
 
@@ -28,9 +30,9 @@ tests/
 PHP 8.3 with Laravel 11: Follow standard conventions
 
 ## Recent Changes
+- 005-observability-dashboards: Added PHP 8.3 + JavaScript (ES6+) + Laravel 11, Livewire 3, Tailwind CSS, spatie/laravel-prometheus, web-vitals (npm)
 - 004-brochure-landing-page: Added PHP 8.3 + JavaScript (ES6+) + Laravel 12, Livewire 3, Tailwind CSS 3.1+, p5.js (new dependency)
 - 003-admin-permissions: Added PHP 8.3 + Laravel Breeze (auth), Tailwind CSS (styling), Alpine.js (interactivity)
-- 003-admin-permissions: Added [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
 
 
 <!-- MANUAL ADDITIONS START -->
